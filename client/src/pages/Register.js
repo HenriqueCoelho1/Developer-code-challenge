@@ -1,29 +1,37 @@
 import React, { useState } from 'react'
-import { Input, Form } from 'antd'
+import CreateForm from '../components/form/CreateForm'
+import { createUser } from '../components/functions/User'
 
-const { Item } = Form
-const Register = () => {
+
+const initialState = {
+    name: "",
+    email: "",
+    cpf: ""
+}
+
+const Register = ({ history }) => {
+    const [values, setValues] = useState(initialState)
+    const handleSubmit = (e) => {
+        e.preventDefault()
+
+        createUser(values).then(res => {
+            console.log(res)
+            window.alert(`${res.data.name} was created`)
+            history.push("/list")
+        })
+    }
+
+    console.log(values)
+
+    const handleChange = (e) => {
+        setValues({ ...values, [e.target.name]: e.target.value })
+    }
     return (
-        <div className="container mt-4">
-            <div className="row">
-                <Form layout="vertical">
-                    <Item name={["fullname"]}
-                        label="Nome completo: ">
-                        <Input placeholder="Ex.: João da Silva Santos" />
-                    </Item>
-
-                    <Item name={["email"]}
-                        label="Email: " type="email">
-                        <Input placeholder="exemplo@gmail.com" />
-                    </Item>
-
-                    <Item name={["cpf"]}
-                        label="cpf: ">
-                        <Input placeholder="exemplo@gmail.com" />
-                    </Item>
-                </Form>
-            </div>
-        </div>
+        <CreateForm
+            handleSubmit={handleSubmit}
+            values={values}
+            setValues={setValues}
+            handleChange={handleChange} />
     )
 }
 
