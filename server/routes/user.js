@@ -4,31 +4,30 @@ const router = express.Router()
 const { check, validationResult } = require('express-validator')
 
 router.post("/user", [
-    check('email').isEmail().isLength({ min: 3, max: 200 }).isEmpty(),
-    check('cpf').isNumeric().isLength({ min: 11, max: 11 }).isEmpty(),
-    check('name').isString().isLength({ min: 2, max: 200 }).isEmpty()
+    check('name').isAlpha().isLength({ min: 2, max: 200 }).trim(),
+    check('email').isEmail().isLength({ min: 3, max: 200 }).trim(),
+    check('cpf').isNumeric().isLength({ min: 11, max: 11 }).trim()
 
 ],
-    async (req, res) => {
+    async (req, res, next) => {
         try {
             const errors = validationResult(req)
             if (!errors.isEmpty()) {
-                console.log(errors)
+                // console.log(errors)
                 return res.status(422).json({ errors: errors.array() })
             }
-            else {
-                const { name, email, cpf } = req.body
-                const nameUpper = name.toUpperCase()
-                const createPerson = await
-                    pool.query("INSERT INTO person (name, email, cpf) VALUES($1, $2, $3) RETURNING *",
-                        [nameUpper, email, cpf])
-                res.json(createPerson.rows[0])
 
-            }
+            const { name, email, cpf } = req.body
 
+            const nameUpper = name.toUpperCase()
+            const createPerson = await
+                pool.query("INSERT INTO person (name, email, cpf) VALUES($1, $2, $3) RETURNING *",
+                    [nameUpper, email, cpf])
+            res.json(createPerson.rows[0])
 
         } catch (err) {
-            console.log("CREATE ERROR", err.message)
+            // console.log("CREATE ERROR", err.message)
+            next(err)
 
         }
 
@@ -43,7 +42,7 @@ router.get("/user/:id", async (req, res) => {
 
 
     } catch (err) {
-        console.log("CREATE ERROR", err.message)
+        // console.log("CREATE ERROR", err.message)
 
     }
 })
@@ -56,25 +55,31 @@ router.get("/user", async (req, res) => {
 
 
     } catch (err) {
-        console.log("CREATE ERROR", err.message)
+        // console.log("CREATE ERROR", err.message)
 
     }
 })
 
 router.put("/user/:id",
-    check('email').isEmail().isLength({ min: 3, max: 200 }).isEmpty(),
-    check('name').isString().isLength({ min: 2, max: 200 }).isEmpty(),
+    check('email').isEmail().isLength({ min: 3, max: 200 }).trim(),
+    check('name').isString().isLength({ min: 2, max: 200 }).trim(),
     async (req, res) => {
         try {
+            const errors = validationResult(req)
+            if (!errors.isEmpty()) {
+                // console.log(errors)
+                return res.status(422).json({ errors: errors.array() })
+            }
             const { id } = req.params
             const { name, email } = req.body
+            const nameUpper = name.toUpperCase()
             const updateOne =
-                await pool.query("UPDATE person SET name = $1, email = $2 WHERE id = $3", [name, email, id])
+                await pool.query("UPDATE person SET name = $1, email = $2 WHERE id = $3", [nameUpper, email, id])
 
             res.json("User updated!")
 
         } catch (err) {
-            console.log("UPDATE ERROR", err.message)
+            // console.log("UPDATE ERROR", err.message)
 
         }
     })
@@ -88,7 +93,7 @@ router.delete("/user/:id", async (req, res) => {
         res.json("This person was deleted!")
 
     } catch (error) {
-        console.log("REMOVE ERROR", err.message)
+        // console.log("REMOVE ERROR", err.message)
 
     }
 })

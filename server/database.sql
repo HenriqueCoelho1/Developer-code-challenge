@@ -1,0 +1,9 @@
+CREATE DATABASE challange_project;
+
+CREATE TABLE person(
+  id SERIAL,
+  name VARCHAR(200) NOT NULL,
+  email VARCHAR(200) NOT NULL,
+  cpf VARCHAR(11) NOT NULL UNIQUE,
+  PRIMARY KEY(id)
+);

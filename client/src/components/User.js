@@ -2,7 +2,7 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import { EditOutlined, DeleteOutlined } from '@ant-design/icons'
 
-const User = ({ user }) => {
+const User = ({ user, handleRemove }) => {
 
     // console.log(user)
 
@@ -19,9 +19,9 @@ const User = ({ user }) => {
             <td>{email}</td>
             <td>{formatingCPF(cpf)}</td>
             <td>
-                <Link to={`/user/${user.id}`}><EditOutlined /></Link>
+                <Link className="btn" to={`/user/${user.id}`}><EditOutlined className="text-info" /></Link>
                 {" "}
-                <a to=""><DeleteOutlined /></a>
+                <a className="btn" onClick={() => handleRemove(id)}><DeleteOutlined className="text-danger" /></a>
 
             </td>
         </>

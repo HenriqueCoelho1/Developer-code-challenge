@@ -15,13 +15,13 @@ const Register = ({ history }) => {
         e.preventDefault()
 
         createUser(values).then(res => {
-            console.log(res)
+            // console.log(res)
             window.alert(`${res.data.name} was created`)
             history.push("/list")
         })
     }
 
-    console.log(values)
+    // console.log(values)
 
     const handleChange = (e) => {
         setValues({ ...values, [e.target.name]: e.target.value })

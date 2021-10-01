@@ -1,13 +1,18 @@
 import React from 'react'
-const CreateForm = ({ values, handleSubmit, handleChange }) => {
 
-    const { name, email, cpf } = values
 
+const UpdateForm = ({ values, handleSubmit, handleChange, cpf, setCpf }) => {
+
+    const { name, email } = values
+    const formatingCPF = (cpf) => {
+        cpf = cpf.replace(/[^\d]/g, "");
+        return cpf.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, "$1.$2.$3-$4");
+    }
     return (
         <div className="container mt-4">
             <div className="row">
                 <div className="col-md-3 offset-md-4 pt-5">
-                    <h1 className="text-center pb-2">Cadastrar</h1>
+                    <h1 className="text-center pb-2">Editar</h1>
                     <form layout="vertical" onSubmit={handleSubmit}>
 
                         <div className="form-group">
@@ -35,18 +40,15 @@ const CreateForm = ({ values, handleSubmit, handleChange }) => {
                         <div className="form-group">
                             <label className="col-form-label">Cpf:</label>
                             <input
-                                maxlength="11"
-                                onChange={handleChange}
-                                value={cpf}
+                                value={formatingCPF(cpf)}
                                 name="cpf"
-                                type="text"
+                                type="number"
                                 className="form-control"
-
-                            />
+                                disabled />
                         </div>
 
                         <br />
-                        <button type="submit" className="btn btn-outline-info centered">Registrar</button>
+                        <button type="submit" className="btn btn-outline-info centered">Atualizar</button>
                     </form>
                 </div>
             </div>
@@ -54,4 +56,4 @@ const CreateForm = ({ values, handleSubmit, handleChange }) => {
     )
 }
 
-export default CreateForm
+export default UpdateForm
