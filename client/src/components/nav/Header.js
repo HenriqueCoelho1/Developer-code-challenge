@@ -18,19 +18,14 @@ const HeaderComponent = () => {
 
     return (
         <Menu onClick={handleClick} selectedKeys={[current]} mode="horizontal">
-            <Item key="home" icon={<AppstoreOutlined />}>
-                <Link to="/">
-                    Home
-                </Link>
-            </Item>
-            <Item key="list" icon={<SubnodeOutlined />} className="ml-auto">
+            <Item key="list" icon={<OrderedListOutlined />} className="ml-auto">
                 <Link to="/list">
-                    Casdastrar
+                    Registros
                 </Link>
             </Item>
-            <Item key="register" icon={<OrderedListOutlined />}>
+            <Item key="register" icon={<SubnodeOutlined />} >
                 <Link to="/register">
-                    Registros
+                    Cadastrar
                 </Link>
             </Item>
 

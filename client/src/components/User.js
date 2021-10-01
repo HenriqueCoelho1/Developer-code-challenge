@@ -2,17 +2,26 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import { EditOutlined, DeleteOutlined } from '@ant-design/icons'
 
-const User = () => {
+const User = ({ user, handleRemove }) => {
+
+    // console.log(user)
+
+    const { id, cpf, name, email } = user
+
+    const formatingCPF = (cpf) => {
+        cpf = cpf.replace(/[^\d]/g, "");
+        return cpf.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, "$1.$2.$3-$4");
+    }
     return (
         <>
-            <td>1</td>
-            <td>Claypson Orisvaldo da silva</td>
-            <td>claypson@gmail.com</td>
-            <td>123522243</td>
+            <td>{id}</td>
+            <td>{name}</td>
+            <td>{email}</td>
+            <td>{formatingCPF(cpf)}</td>
             <td>
-                <Link to=""><EditOutlined /></Link>
+                <Link className="btn" to={`/user/${user.id}`}><EditOutlined className="text-info" /></Link>
                 {" "}
-                <a to=""><DeleteOutlined /></a>
+                <a className="btn" onClick={() => handleRemove(id)}><DeleteOutlined className="text-danger" /></a>
 
             </td>
         </>
