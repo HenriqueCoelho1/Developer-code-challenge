@@ -42,7 +42,7 @@ const UpdateForm = ({ values, handleSubmit, handleChange, cpf, setCpf }) => {
                             <input
                                 value={formatingCPF(cpf)}
                                 name="cpf"
-                                type="number"
+                                type="text"
                                 className="form-control"
                                 disabled />
                         </div>
