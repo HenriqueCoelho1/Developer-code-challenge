@@ -1,6 +1,7 @@
 const express = require('express')
 const cors = require('cors')
 const morgan = require('morgan')
+const cookieParser = require('cookie-parser')
 const userRoutes = require('./routes/user')
 const { readdirSync } = require('fs')
 require('dotenv').config()

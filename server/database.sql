@@ -1,9 +1,10 @@
 CREATE DATABASE challange_project;
 
-CREATE TABLE person(
+CREATE TABLE user(
   id SERIAL,
   name VARCHAR(200) NOT NULL,
-  email VARCHAR(200) NOT NULL,
+  email VARCHAR(200) NOT NULL UNIQUE,
+  password VARCHAR(250) NOT NULL,
   cpf VARCHAR(11) NOT NULL UNIQUE,
   PRIMARY KEY(id)
 );
